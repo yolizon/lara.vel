@@ -66,6 +66,7 @@ Route::name('admin.')->prefix('admin')->namespace("App\Http\Controllers\Admin")-
     Route::get('', 'DashboardController')->name('dashboard');
     Route::get('config', 'ConfigController@index')->name('config');
     Route::resource('users', 'UserController');
+    Route::resource('categories', 'CategoryController');
 });
 
 Route::name('site.')->prefix('site')->namespace("App\Http\Controllers")->group(function(){ 
