@@ -26,7 +26,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.categories.create');
     }
 
     /**
@@ -37,7 +37,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        \DB::table('categories')->insert([
+            'name' => $request['name'],
+            'description' =>$request['description'],
+            'status' => $request['status'],
+            'created_at'=>now(),
+            'updated_at'=>now()
+            ]
+        );
     }
 
     /**
@@ -59,7 +66,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category=\DB::table('categories')->where('id', $id)->first();
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
@@ -71,7 +79,16 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        \DB::table('categories')
+        ->where('id', $id)
+        ->update([
+            'name' => $request['name'],
+            'description' =>$request['description'],
+            'status' => $request['status'],
+            'created_at'=>now(),
+            'updated_at'=>now()
+            ]
+        );
     }
 
     /**
@@ -82,6 +99,6 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        \DB::table('categories')->where('id', $id)->delete();
     }
 }
