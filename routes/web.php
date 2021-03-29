@@ -17,6 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::name('admin.')->prefix('admin')->namespace("App\Http\Controllers\Admin")->group(function(){ 
     Route::get('', 'DashboardController')->name('dashboard');
     Route::get('config', 'ConfigController@index')->name('config');
@@ -28,6 +29,9 @@ Route::name('site.')->prefix('site')->namespace("App\Http\Controllers")->group(f
     Route::get('', 'HomeController@index')->name('home');
         Route::get('about', 'AboutController@index')->name('about');
         Route::get('contact', 'ContactController@index')->name('contact');
+        Route::get('catalog', function () {
+            return view('web.catalog');
+        });
 });
 Route::fallback(function(){
     return view('errors.404');
