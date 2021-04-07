@@ -70,10 +70,10 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $categories = Category::all();
-        $brands = Brand::pluck('name', 'id');
-        $productArray = ProductStatus::asSelectArray();
-        return view('admin.products.edit', compact('product', 'categories', 'brands', 'productArray'));
+        // $categories = Category::all();
+        // $brands = Brand::pluck('name', 'id');
+        // $productArray = ProductStatus::asSelectArray();
+        return view('admin.products.edit');
     }
 
     /**
