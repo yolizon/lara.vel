@@ -33,6 +33,8 @@ Route::name('site.')->prefix('site')->namespace("App\Http\Controllers")->group(f
     Route::get('', 'HomeController@index')->name('home');
         Route::get('about', 'AboutController@index')->name('about');
         Route::get('contact', 'ContactController@index')->name('contact');
+        Route::get('shop', 'ShopController@index')->name('shop');
+        Route::get('shop/{id}', 'ShopController@show')->name('shop.product');
         Route::get('catalog', function () {
             return view('web.catalog');
         });
