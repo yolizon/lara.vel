@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Cart;
 
 class ShopController extends Controller
 {
@@ -84,8 +85,30 @@ class ShopController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    private function addProduct(Request $request, $quantity, $itemId)
     {
-        //
+        $product=Product::whereId($request->productId)->with('brand')->with('category')->with('pictures')->firstOrFail();
+        $options =['picture'=>$product->pictures[0]->cover_path];
+        Cart::add($itemId, $product->name, $request->price, $quantity, $options);
+    }
+    public function addToCart(Request $request)
+    {
+        $quantity = $request->quantity ?? 1;
+        $itemId = $request->productId;
+
+        if(Cart::isEmpty()){
+            $this->addProduct($request, $quantity, $itemId);
+        }else{
+            if(Cart::get($itemId)){
+                Cart::update($itemId, [
+                    'quantity' => $quantity
+                ]);
+            }else{
+                $this->addProduct($request, $quantity, $itemId);
+            }
+            
+        }
+
+        return redirect()->back();
     }
 }

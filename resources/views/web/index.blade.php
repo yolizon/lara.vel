@@ -11,6 +11,9 @@
                 @forelse($products as $product)
                 <div class="p-4 md:w-1/3">
                     <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+                        <form action="{{ route('product.add.to.cart')}}" method='POST' role="form">@csrf
+                        <input type="hidden" name="productId" value="{{$product->id}}">
+                        <input type="hidden" name="price" value="{{$product->price}}">
                         <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="/storage/{{ $product->pictures[0]->cover_path ?? null }}" alt="{{ $product->name }}">
                         <div class="p-6">
                             <div class="flex items-center flex-wrap ">
@@ -21,9 +24,9 @@
                                 </a>
                             </div>
                             <div class="flex items-center flex-wrap ">
-                                <a class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">Add To Cart
+                            <button type="submit" class="inline-flex flex-shrink-0 items-center xl:mt-0 lg:mt-3 text-white bg-indigo-500 border-0 py-2 px-6 hover:bg-indigo-700 rounded">Add To Cart
                                     
-                                </a>
+                                </button>
                                 <span class="font-bold text-gray-700 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1">
                                     ${{ $product->price }}
                                 </span>
@@ -31,6 +34,7 @@
                             
                             </div>
                         </div>
+                        </form>
                     </div>
                 </div>
                 @empty

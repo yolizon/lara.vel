@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Brand;
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 
 class BrandController extends Controller
@@ -81,6 +81,27 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
-        //
+        $brand->delete();
+        return redirect()->route('admin.brands.index');
+    }
+    public function trashed()
+    {
+        return view('admin.brands.trashed');
+    }
+    public function restore($id)
+    {
+        Brand::withTrashed()
+        ->where('id', $id)
+        ->restore();
+        return redirect(route('admin.brands.trashed'));
+    }
+    public function force($id)
+    {
+        $brand = Brand::withTrashed()
+        ->where('id', $id)
+        ->first();
+        $brand->forceDelete();
+        return redirect(route('admin.brands.index'));
+        
     }
 }
